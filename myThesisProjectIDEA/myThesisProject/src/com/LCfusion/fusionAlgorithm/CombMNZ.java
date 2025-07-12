@@ -1,0 +1,558 @@
+package com.LCfusion.fusionAlgorithm;
+
+import com.LCfusion.LC.*;
+
+import com.LCfusion.dataStruct.*;
+
+//import hcl.fusion.datastruct.BinaryTree;
+//import hcl.fusion.datastruct.BinaryTreeNode;
+//import hcl.fusion.datastruct.ResultList;
+//import hcl.fusion.datastruct.TreeByAttribute;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Hashtable;
+
+
+public class CombMNZ extends LC{
+
+	public CombMNZ(int numofsystem, int numofquery, int startquery,
+			Hashtable<String, Integer> sys) {
+		super(numofsystem, numofquery, startquery, sys);
+		// TODO Auto-generated constructor stub
+	}
+
+	public void CombMNZFusion2020health_classification(String[] classification_run,String output,String combsysname) throws Exception{
+		ResultList[] grouplists=new ResultList[numofsystem];//???????????????resultlist????
+		//File fpath=new File(norminput);//???????????
+		//File[] files=fpath.listFiles();//??????????????????????????file????
+		BufferedReader[] readers=new BufferedReader[numofsystem];//???????????????????????????????
+		FileWriter writer=new FileWriter(output);//????????????????????????????
+		int qqID=1;
+		//open file reader
+		for(int i=0;i<numofsystem;i++){
+			readers[i]=new BufferedReader(new FileReader(classification_run[i]));
+			//readers[i]=new BufferedReader(new FileReader(files[i]));//?????????????????????????????????????
+			bufferline[i]=new String(readers[i].readLine());	//?????????????????????????§Ö???§ß??§Ø???????????????
+		}
+		//for all query
+	    if(startquery==51){
+	    	for(int qid=0;qid<numofquery;qid++){
+				//:get the lists
+				 if (qid == 44 || qid == 49) {
+						continue;
+					}
+					
+				for(int i=0;i<numofsystem;i++){		
+					grouplists[i]=getResultList(readers[i],i,true);
+					if( i>0 && grouplists[i].topic!=grouplists[i-1].topic)
+						throw new Exception("qid??????????input?????query??");			
+				}
+				//combine systems in a query
+				BinaryTree bt = new BinaryTree();//LN
+				for (int sid=0; sid<numofsystem; sid++){
+					for (int i=0; i<grouplists[sid].list.size(); i++){
+						String docid=grouplists[sid].list.get(i).docid;
+						double score=grouplists[sid].list.get(i).score;
+						bt.search_add(docid, score);
+					}
+				}
+				combineSystem(qid+startquery, bt, combsysname,writer);
+			}
+	    	
+	    }else
+	    {
+	    	for(int qid=0;qid<numofquery;qid++){//???????id§³?????50??????????numofquery????????50??
+				//:get the lists
+				if(qqID==33) {
+					qqID++;
+				}
+				if(qqID==35) {
+					qqID++;
+				}
+				if(qqID==46) {
+					qqID++;
+				}
+				if(qqID==48) {
+					qqID++;
+				}
+				for(int i=0;i<numofsystem;i++){		
+					grouplists[i]=getResultList(readers[i],i,true);
+					if( i>0 && grouplists[i].topic!=grouplists[i-1].topic)
+						throw new Exception("qid??????????input?????query??");			
+				}
+				//combine systems in a query
+				BinaryTree bt = new BinaryTree();//LN
+				for (int sid=0; sid<numofsystem; sid++){
+					for (int i=0; i<grouplists[sid].list.size(); i++){
+						String docid=grouplists[sid].list.get(i).docid;
+						double score=grouplists[sid].list.get(i).score;
+						bt.search_add(docid, score);
+					}
+				}
+				combineSystem(qqID, bt, combsysname,writer);
+				qqID++;
+			}
+	    }
+				
+		//close the files
+		for(int i=0;i<numofsystem;i++){
+			readers[i].close();
+		}
+		writer.close();
+		System.err.println("fusion is end~");
+	}
+	public void CombMNZFusion2017_Cha_classification(String[] classification_run,String output,String combsysname) throws Exception{
+		ResultList[] grouplists=new ResultList[numofsystem];//???????????????resultlist????
+		//File fpath=new File(norminput);//???????????
+		//File[] files=fpath.listFiles();//??????????????????????????file????
+		BufferedReader[] readers=new BufferedReader[numofsystem];//???????????????????????????????
+		FileWriter writer=new FileWriter(output);//????????????????????????????
+		int qqID=0;
+		//open file reader
+		for(int i=0;i<numofsystem;i++){
+			readers[i]=new BufferedReader(new FileReader(classification_run[i]));
+			//readers[i]=new BufferedReader(new FileReader(files[i]));//?????????????????????????????????????
+			bufferline[i]=new String(readers[i].readLine());	//?????????????????????????§Ö???§ß??§Ø???????????????
+		}
+		//for all query
+	    if(startquery==51){
+	    	for(int qid=0;qid<numofquery;qid++){
+				//:get the lists
+				 if (qid == 44 || qid == 49) {
+						continue;
+					}
+					
+				for(int i=0;i<numofsystem;i++){		
+					grouplists[i]=getResultList(readers[i],i,true);
+					if( i>0 && grouplists[i].topic!=grouplists[i-1].topic)
+						throw new Exception("qid??????????input?????query??");			
+				}
+				//combine systems in a query
+				BinaryTree bt = new BinaryTree();//LN
+				for (int sid=0; sid<numofsystem; sid++){
+					for (int i=0; i<grouplists[sid].list.size(); i++){
+						String docid=grouplists[sid].list.get(i).docid;
+						double score=grouplists[sid].list.get(i).score;
+						bt.search_add(docid, score);
+					}
+				}
+				combineSystem(qid+startquery, bt, combsysname,writer);
+			}
+	    	
+	    }else
+	    {
+	    	for(int qid=0;qid<numofquery;qid++){//???????id§³?????50??????????numofquery????????50??
+				//:get the lists
+				for(int i=0;i<numofsystem;i++){		
+					grouplists[i]=getResultList(readers[i],i,true);
+					if( i>0 && grouplists[i].topic!=grouplists[i-1].topic)
+						throw new Exception("qid??????????input?????query??");	
+					qqID = grouplists[i].topic;
+				}
+				//combine systems in a query
+				BinaryTree bt = new BinaryTree();//LN
+				for (int sid=0; sid<numofsystem; sid++){
+					for (int i=0; i<grouplists[sid].list.size(); i++){
+						String docid=grouplists[sid].list.get(i).docid;
+						double score=grouplists[sid].list.get(i).score;
+						bt.search_add(docid, score);
+					}
+				}
+				combineSystem(qqID, bt, combsysname,writer);
+			}
+	    }
+				
+		//close the files
+		for(int i=0;i<numofsystem;i++){
+			readers[i].close();
+		}
+		writer.close();
+		System.err.println("fusion is end~");
+	}
+	public void CombMNZFusion2018_Cha_classification(String[] classification_run,String output,String combsysname) throws Exception{
+		ResultList[] grouplists=new ResultList[numofsystem];//???????????????resultlist????
+		//File fpath=new File(norminput);//???????????
+		//File[] files=fpath.listFiles();//??????????????????????????file????
+		BufferedReader[] readers=new BufferedReader[numofsystem];//???????????????????????????????
+		FileWriter writer=new FileWriter(output);//????????????????????????????
+		int qqID=0;
+		//open file reader
+		for(int i=0;i<numofsystem;i++){
+			readers[i]=new BufferedReader(new FileReader(classification_run[i]));
+			//readers[i]=new BufferedReader(new FileReader(files[i]));//?????????????????????????????????????
+			bufferline[i]=new String(readers[i].readLine());	//?????????????????????????§Ö???§ß??§Ø???????????????
+		}
+		//for all query
+	    if(startquery==51){
+	    	for(int qid=0;qid<numofquery;qid++){
+				//:get the lists
+				 if (qid == 44 || qid == 49) {
+						continue;
+					}
+					
+				for(int i=0;i<numofsystem;i++){		
+					grouplists[i]=getResultList(readers[i],i,true);
+					if( i>0 && grouplists[i].topic!=grouplists[i-1].topic)
+						throw new Exception("qid??????????input?????query??");			
+				}
+				//combine systems in a query
+				BinaryTree bt = new BinaryTree();//LN
+				for (int sid=0; sid<numofsystem; sid++){
+					for (int i=0; i<grouplists[sid].list.size(); i++){
+						String docid=grouplists[sid].list.get(i).docid;
+						double score=grouplists[sid].list.get(i).score;
+						bt.search_add(docid, score);
+					}
+				}
+				combineSystem(qid+startquery, bt, combsysname,writer);
+			}
+	    	
+	    }else
+	    {
+	    	for(int qid=0;qid<numofquery;qid++){//???????id§³?????50??????????numofquery????????50??
+				//:get the lists
+				for(int i=0;i<numofsystem;i++){		
+					grouplists[i]=getResultList(readers[i],i,true);
+					if( i>0 && grouplists[i].topic!=grouplists[i-1].topic)
+						throw new Exception("qid??????????input?????query??");	
+					qqID = grouplists[i].topic;
+				}
+				//combine systems in a query
+				BinaryTree bt = new BinaryTree();//LN
+				for (int sid=0; sid<numofsystem; sid++){
+					for (int i=0; i<grouplists[sid].list.size(); i++){
+						String docid=grouplists[sid].list.get(i).docid;
+						double score=grouplists[sid].list.get(i).score;
+						bt.search_add(docid, score);
+					}
+				}
+				combineSystem(qqID, bt, combsysname,writer);
+			}
+	    }
+				
+		//close the files
+		for(int i=0;i<numofsystem;i++){
+			readers[i].close();
+		}
+		writer.close();
+		System.err.println("fusion is end~");
+	}
+	public void CombMNZFusion_classification(String[] classification_run,String output,String combsysname) throws Exception{
+		ResultList[] grouplists=new ResultList[numofsystem];//???????????????resultlist????
+		//File fpath=new File(norminput);//???????????
+		//File[] files=fpath.listFiles();//??????????????????????????file????
+		BufferedReader[] readers=new BufferedReader[numofsystem];//???????????????????????????????
+		FileWriter writer=new FileWriter(output);//????????????????????????????
+		int qqID=0;
+		//open file reader
+		for(int i=0;i<numofsystem;i++){
+			readers[i]=new BufferedReader(new FileReader(classification_run[i]));
+			//readers[i]=new BufferedReader(new FileReader(files[i]));//?????????????????????????????????????
+			bufferline[i]=new String(readers[i].readLine());	//?????????????????????????§Ö???§ß??§Ø???????????????
+		}
+		//for all query
+	    if(startquery==-1){
+	    	for(int qid=0;qid<numofquery;qid++){
+				//:get the lists
+				 if (qid == 44 || qid == 49) {
+						continue;
+					}
+					
+				for(int i=0;i<numofsystem;i++){		
+					grouplists[i]=getResultList(readers[i],i,true);
+					if( i>0 && grouplists[i].topic!=grouplists[i-1].topic)
+						throw new Exception("qid??????????input?????query??");			
+				}
+				//combine systems in a query
+				BinaryTree bt = new BinaryTree();//LN
+				for (int sid=0; sid<numofsystem; sid++){
+					for (int i=0; i<grouplists[sid].list.size(); i++){
+						String docid=grouplists[sid].list.get(i).docid;
+						double score=grouplists[sid].list.get(i).score;
+						bt.search_add(docid, score);
+					}
+				}
+				combineSystem(qid+startquery, bt, combsysname,writer);
+			}
+	    	
+	    }else
+	    {
+	    	for(int qid=0;qid<numofquery;qid++){//???????id§³?????50??????????numofquery????????50??
+				//:get the lists
+				for(int i=0;i<numofsystem;i++){		
+					grouplists[i]=getResultList(readers[i],i,true);
+					//?????2010?????????????100topic??????????????
+					/*
+					if( i>0 && grouplists[i].topic!=grouplists[i-1].topic)
+						throw new Exception("qid??????????input?????query??");	
+					*/
+					qqID = grouplists[i].topic;
+				}
+				//combine systems in a query
+				BinaryTree bt = new BinaryTree();//LN
+				for (int sid=0; sid<numofsystem; sid++){
+					for (int i=0; i<grouplists[sid].list.size(); i++){
+						String docid=grouplists[sid].list.get(i).docid;
+						double score=grouplists[sid].list.get(i).score;
+						bt.search_add(docid, score);
+					}
+				}
+				//System.out.println(qqID);
+				combineSystem(qqID, bt, combsysname,writer);
+			}
+	    }
+				
+		//close the files
+		for(int i=0;i<numofsystem;i++){
+			readers[i].close();
+		}
+		writer.close();
+		System.err.println("fusion is end~");
+	}
+	public void CombMNZFusion2018_C_FS_classification(String[] classification_run,String output,String combsysname) throws Exception{
+		ResultList[] grouplists=new ResultList[numofsystem];//???????????????resultlist????
+		//File fpath=new File(norminput);//???????????
+		//File[] files=fpath.listFiles();//??????????????????????????file????
+		BufferedReader[] readers=new BufferedReader[numofsystem];//???????????????????????????????
+		FileWriter writer=new FileWriter(output);//????????????????????????????
+		int qqID=0;
+		//open file reader
+		for(int i=0;i<numofsystem;i++){
+			readers[i]=new BufferedReader(new FileReader(classification_run[i]));
+			//readers[i]=new BufferedReader(new FileReader(files[i]));//?????????????????????????????????????
+			bufferline[i]=new String(readers[i].readLine());	//?????????????????????????§Ö???§ß??§Ø???????????????
+		}
+		//for all query
+	    if(startquery==51){
+	    	for(int qid=0;qid<numofquery;qid++){
+				//:get the lists
+				 if (qid == 44 || qid == 49) {
+						continue;
+					}
+					
+				for(int i=0;i<numofsystem;i++){		
+					grouplists[i]=getResultList(readers[i],i,true);
+					if( i>0 && grouplists[i].topic!=grouplists[i-1].topic)
+						throw new Exception("qid??????????input?????query??");			
+				}
+				//combine systems in a query
+				BinaryTree bt = new BinaryTree();//LN
+				for (int sid=0; sid<numofsystem; sid++){
+					for (int i=0; i<grouplists[sid].list.size(); i++){
+						String docid=grouplists[sid].list.get(i).docid;
+						double score=grouplists[sid].list.get(i).score;
+						bt.search_add(docid, score);
+					}
+				}
+				combineSystem(qid+startquery, bt, combsysname,writer);
+			}
+	    	
+	    }else
+	    {
+	    	for(int qid=0;qid<numofquery;qid++){//???????id§³?????50??????????numofquery????????50??
+				//:get the lists
+				for(int i=0;i<numofsystem;i++){		
+					grouplists[i]=getResultList(readers[i],i,true);
+					if( i>0 && grouplists[i].topic!=grouplists[i-1].topic)
+						throw new Exception("qid??????????input?????query??");	
+					qqID = grouplists[i].topic;
+				}
+				//combine systems in a query
+				BinaryTree bt = new BinaryTree();//LN
+				for (int sid=0; sid<numofsystem; sid++){
+					for (int i=0; i<grouplists[sid].list.size(); i++){
+						String docid=grouplists[sid].list.get(i).docid;
+						double score=grouplists[sid].list.get(i).score;
+						bt.search_add(docid, score);
+					}
+				}
+				combineSystem(qqID, bt, combsysname,writer);
+			}
+	    }
+				
+		//close the files
+		for(int i=0;i<numofsystem;i++){
+			readers[i].close();
+		}
+		writer.close();
+		System.err.println("fusion is end~");
+	}
+	public void CombMNZFusion2020health(String norminput,String output,String combsysname) throws Exception{
+		ResultList[] grouplists=new ResultList[numofsystem];//???????????????resultlist????
+		File fpath=new File(norminput);//???????????
+		File[] files=fpath.listFiles();//??????????????????????????file????
+		BufferedReader[] readers=new BufferedReader[numofsystem];//???????????????????????????????
+		FileWriter writer=new FileWriter(output);//????????????????????????????
+		int qqID=1;
+		//open file reader
+		for(int i=0;i<numofsystem;i++){
+			readers[i]=new BufferedReader(new FileReader(files[i]));//?????????????????????????????????????
+			bufferline[i]=new String(readers[i].readLine());	//?????????????????????????§Ö???§ß??§Ø???????????????
+		}
+		//for all query
+	    if(startquery==51){
+	    	for(int qid=0;qid<numofquery;qid++){
+				//:get the lists
+				 if (qid == 44 || qid == 49) {
+						continue;
+					}
+					
+				for(int i=0;i<numofsystem;i++){		
+					grouplists[i]=getResultList(readers[i],i,true);
+					if( i>0 && grouplists[i].topic!=grouplists[i-1].topic)
+						throw new Exception("qid??????????input?????query??");			
+				}
+				//combine systems in a query
+				BinaryTree bt = new BinaryTree();//LN
+				for (int sid=0; sid<numofsystem; sid++){
+					for (int i=0; i<grouplists[sid].list.size(); i++){
+						String docid=grouplists[sid].list.get(i).docid;
+						double score=grouplists[sid].list.get(i).score;
+						bt.search_add(docid, score);
+					}
+				}
+				combineSystem(qid+startquery, bt, combsysname,writer);
+			}
+	    	
+	    }else
+	    {
+	    	for(int qid=0;qid<numofquery;qid++){//???????id§³?????50??????????numofquery????????50??
+				//:get the lists
+				if(qqID==33) {
+					qqID++;
+				}
+				if(qqID==35) {
+					qqID++;
+				}
+				if(qqID==46) {
+					qqID++;
+				}
+				if(qqID==48) {
+					qqID++;
+				}
+				for(int i=0;i<numofsystem;i++){		
+					grouplists[i]=getResultList(readers[i],i,true);
+					if( i>0 && grouplists[i].topic!=grouplists[i-1].topic)
+						throw new Exception("qid??????????input?????query??");			
+				}
+				//combine systems in a query
+				BinaryTree bt = new BinaryTree();//LN
+				for (int sid=0; sid<numofsystem; sid++){
+					for (int i=0; i<grouplists[sid].list.size(); i++){
+						String docid=grouplists[sid].list.get(i).docid;
+						double score=grouplists[sid].list.get(i).score;
+						bt.search_add(docid, score);
+					}
+				}
+				combineSystem(qqID, bt, combsysname,writer);
+				qqID++;
+			}
+	    }
+				
+		//close the files
+		for(int i=0;i<numofsystem;i++){
+			readers[i].close();
+		}
+		writer.close();
+		System.err.println("fusion is end~");
+	}
+	public void CombMNZFusion(String norminput,String output,String combsysname) throws Exception{
+		ResultList[] grouplists=new ResultList[numofsystem];//???????????????resultlist????
+		File fpath=new File(norminput);//???????????
+		File[] files=fpath.listFiles();//??????????????????????????file????
+		BufferedReader[] readers=new BufferedReader[numofsystem];//???????????????????????????????
+		FileWriter writer=new FileWriter(output);//????????????????????????????
+		//open file reader
+		for(int i=0;i<numofsystem;i++){
+			readers[i]=new BufferedReader(new FileReader(files[i]));//?????????????????????????????????????
+			bufferline[i]=new String(readers[i].readLine());	//?????????????????????????§Ö???§ß??§Ø???????????????
+		}
+		//for all query
+	    if(startquery==51){
+	    	for(int qid=0;qid<numofquery;qid++){
+				//:get the lists
+				 if (qid == 44 || qid == 49) {
+						continue;
+					}
+					
+				for(int i=0;i<numofsystem;i++){		
+					grouplists[i]=getResultList(readers[i],i,true);
+					if( i>0 && grouplists[i].topic!=grouplists[i-1].topic)
+						throw new Exception("qid??????????input?????query??");			
+				}
+				//combine systems in a query
+				BinaryTree bt = new BinaryTree();//LN
+				for (int sid=0; sid<numofsystem; sid++){
+					for (int i=0; i<grouplists[sid].list.size(); i++){
+						String docid=grouplists[sid].list.get(i).docid;
+						double score=grouplists[sid].list.get(i).score;
+						bt.search_add(docid, score);
+					}
+				}
+				combineSystem(qid+startquery, bt, combsysname,writer);
+			}
+	    	
+	    }else
+	    {
+	    	for(int qid=0;qid<numofquery;qid++){//???????id§³?????50??????????numofquery????????50??
+				//:get the lists
+					
+				for(int i=0;i<numofsystem;i++){		
+					grouplists[i]=getResultList(readers[i],i,true);
+					if( i>0 && grouplists[i].topic!=grouplists[i-1].topic)
+						throw new Exception("qid??????????input?????query??");			
+				}
+				//combine systems in a query
+				BinaryTree bt = new BinaryTree();//LN
+				for (int sid=0; sid<numofsystem; sid++){
+					for (int i=0; i<grouplists[sid].list.size(); i++){
+						String docid=grouplists[sid].list.get(i).docid;
+						double score=grouplists[sid].list.get(i).score;
+						bt.search_add(docid, score);
+					}
+				}
+				combineSystem(qid+startquery, bt, combsysname,writer);
+			}
+	    }
+				
+		//close the files
+		for(int i=0;i<numofsystem;i++){
+			readers[i].close();
+		}
+		writer.close();
+		System.err.println("fusion is end~");
+	}
+	/**
+	 * ?????????????????????????????????????????§Ö????????count?§Ý????????????????
+	 * @param bt
+	 */
+	public void combineSystem(int topic,BinaryTree bt,String combsysname,FileWriter writer) throws IOException{
+		String temp ="";
+		BinaryTreeNode btn = null;
+		TreeByAttribute tba = new TreeByAttribute();
+		btn=bt.getFirstNodeInLexicalOrder();
+		while (btn!=null){
+			tba.search_add(btn.getName(),btn.getScore()*btn.getCount());//score????????????????????count?????????????
+			btn=btn.getSuccesor();
+		}
+		btn=tba.getFirstNodeInOrder();
+		int i=1;
+		while (btn!=null&&i<=standardlength)
+		{
+			temp=""; temp=new Integer(topic).toString();
+			temp=temp.concat("\tQ0\t");
+			temp=temp.concat(btn.getName());
+			temp=temp.concat("\t"+new Integer(i).toString()+"\t");
+			temp=temp.concat(new Double (btn.getScore()).toString());
+			temp=temp.concat("\t"+combsysname+"\n");
+			writer.write(temp);
+			btn=btn.getSuccesor(); 
+			i++;
+		}
+	}
+	
+}
